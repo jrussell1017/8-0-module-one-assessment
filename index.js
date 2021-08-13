@@ -192,7 +192,7 @@ console.log(findById(movies, "tt1979376"))
  *  //> []
  */
 function filterByGenre(movies, genre) {
-  if(!movie.length) {
+  if(!movies.length) {
     return []
   }
 
@@ -230,7 +230,11 @@ console.log(filterByGenre(movies, "Horror"))
       }
     ];
  */
-function getAllMoviesReleasedAtOrBeforeYear() {}
+function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
+  // for(movie of movies) {
+  //   if(Number(movie.released))
+  // }
+}
 
 /**
  * getBiggestBoxOfficeMovie()
