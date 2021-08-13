@@ -85,8 +85,27 @@ console.log(getHighestMetascore(movies))
  *  getAverageIMDBRating(movies);
  *  //> 7.76
  */
-function getAverageIMDBRating() {}
 
+// helper function to help round number
+function roundNum(num){
+  return Number(num.toFixed(2));
+}
+
+function getAverageIMDBRating(movies) {
+  if(!movies.length) {
+    return 0
+  }
+
+  let avg = 0
+
+  for(let i = 0; i < movies.length; i++) {
+    let movieRating = Number(movies[i].imdbRating)
+    avg += movieRating / movies.length
+  }
+  return roundNum(avg)
+}
+
+console.log(getAverageIMDBRating(movies))
 /**
  * countByRating()
  * -----------------------------
@@ -98,8 +117,28 @@ function getAverageIMDBRating() {}
  *  countByRating(movies);
  *  //> { G: 3, PG: 7 }
  */
-function countByRating() {}
+function countByRating(movies) {
+  if(!movies.length) {
+    return {}
+  }
 
+  let movieObj = {}
+
+  for(let movie of movies) {
+    let movieRating = movie.rated
+
+    if(movieRating) {
+      if(!movieObj[movieRating]) {
+        movieObj[movieRating] = 1
+      } else {
+        movieObj[movieRating] += 1
+      }
+    }
+  }
+  return movieObj
+}
+
+console.log(countByRating(movies))
 /**
  * findById()
  * -----------------------------
@@ -114,7 +153,23 @@ function countByRating() {}
       // Toy Story 4
     };
  */
-function findById() {}
+function findById(movies, id) {
+  if(!movies.length) {
+    return null
+  }
+  
+  let foundId = null 
+  
+  for(let i = 0; i < movies.length; i++) {
+    if(movies[i].imdbID === id) {
+      foundId = movies[i]
+    }
+  }
+  return foundId
+}
+
+console.log(findById(movies, "tt3606756"))
+console.log(findById(movies, "tt1979376"))
 
 /**
  * filterByGenre()
@@ -136,8 +191,23 @@ function findById() {}
  *  filterByGenre(movies, "Horror")
  *  //> []
  */
-function filterByGenre() {}
+function filterByGenre(movies, genre) {
+  if(!movie.length) {
+    return []
+  }
 
+  let movieFilter = []
+
+    for (let movie of movies){
+      if (movie.genre.toLowerCase().includes(genre.toLowerCase())){
+        movieFilter.push(movie)
+      }
+    }
+  return movieFilter
+}
+
+console.log(filterByGenre(movies, "Mystery"))
+console.log(filterByGenre(movies, "Horror"))
 /**
  * getAllMoviesReleasedAtOrBeforeYear()
  * -----------------------------
