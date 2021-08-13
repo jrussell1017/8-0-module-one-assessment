@@ -30,15 +30,17 @@ const exampleMovies = require("./movies");
     ];
  */
 function getAllMovieTitles(movies) {
+// set input & output  
   let movieNameArr = []
 
-
+  // edge case handling
   if(!movies.length) {
     return []
   }
-
+// loop through movies
   for(let i = 0; i < movies.length; i++) {
-    movieNameArr.push(movies[i].title)
+    //push title of movies into array
+    movieNameArr.push(movies[i].title) 
   }
   return movieNameArr
 }
@@ -57,16 +59,18 @@ console.log(getAllMovieTitles(movies))
  *  //> 96
  */
 function getHighestMetascore(movies) {
-  
+  // guard clause
   if(!movies.length) {
     return 0
   }
-  
+  // set the first metaScore to be compared to
   let highestMeta = +movies[0].metascore
-
-  for(let i = 0; i < movies.length; i++) {
+// loop though movies
+  for(let i = 1; i < movies.length; i++) {
+    //set variable for readbility
       let current = +movies[i].metascore
-    if(highestMeta < current) {
+    // ask conditional
+      if(highestMeta < current) {
       highestMeta = current
     }
   }
@@ -92,14 +96,17 @@ function roundNum(num){
 }
 
 function getAverageIMDBRating(movies) {
+  // guard clause
   if(!movies.length) {
     return 0
   }
-
+//set inputs and output
   let avg = 0
-
+// loop though movies
   for(let i = 0; i < movies.length; i++) {
+    // set variable for readability and change rating from string to num
     let movieRating = Number(movies[i].imdbRating)
+    // add all ratings and divide by number of movies
     avg += movieRating / movies.length
   }
   return roundNum(avg)
@@ -118,19 +125,23 @@ console.log(getAverageIMDBRating(movies))
  *  //> { G: 3, PG: 7 }
  */
 function countByRating(movies) {
+  // guard clause
   if(!movies.length) {
     return {}
   }
-
+// set input and output
   let movieObj = {}
-
+// loop though movies
   for(let movie of movies) {
+    // set key to be the movie rating
     let movieRating = movie.rated
-
+// ask conditions
     if(movieRating) {
+      // if there is no movie obj with rating key create it and set it equal to 1
       if(!movieObj[movieRating]) {
         movieObj[movieRating] = 1
       } else {
+        // if there is a rating another movie with that rating then increment by 1
         movieObj[movieRating] += 1
       }
     }
@@ -154,17 +165,21 @@ console.log(countByRating(movies))
     };
  */
 function findById(movies, id) {
+  // guard clause
   if(!movies.length) {
     return null
   }
-  
+  // set input and output
   let foundId = null 
-  
+  // loop through movies
   for(let i = 0; i < movies.length; i++) {
+    // if the imbd rating matches the id given
     if(movies[i].imdbID === id) {
+      // reassign foundId to the movie
       foundId = movies[i]
     }
   }
+  // return movie of associated id
   return foundId
 }
 
@@ -192,17 +207,22 @@ console.log(findById(movies, "tt1979376"))
  *  //> []
  */
 function filterByGenre(movies, genre) {
+  // guard clause
   if(!movies.length) {
     return []
   }
-
+// set inputs and outputs
   let movieFilter = []
-
+// loop though movies
     for (let movie of movies){
+      // use .toLowerCase to deal with case sensitivity
+      // if there are movies with the same genre as the genre given 
       if (movie.genre.toLowerCase().includes(genre.toLowerCase())){
+        // push the movie into movie filter
         movieFilter.push(movie)
       }
     }
+    // return your filtered movies
   return movieFilter
 }
 
@@ -231,10 +251,23 @@ console.log(filterByGenre(movies, "Horror"))
     ];
  */
 function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
-  // for(movie of movies) {
-  //   if(Number(movie.released))
-  // }
+  // set your inputs and out puts
+  let releaseDateArr = []
+  // loop though your movies
+  for(let movie of movies) {
+    // set a variable for readability of the modified released date with just year and turn strung to num
+    let modifiedReleaseDate = movie.released.split(" ").slice(2)
+    // if the release dates are less than or equal to the year given 
+    if(modifiedReleaseDate <= year) {
+      // push said movies
+      releaseDateArr.push(movie)
+    }
+  }
+  // return the movies
+  return releaseDateArr
 }
+
+console.log(getAllMoviesReleasedAtOrBeforeYear(movies, 2000))
 
 /**
  * getBiggestBoxOfficeMovie()
@@ -247,7 +280,27 @@ function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
  *  getBiggestBoxOfficeMovie(movies);
  *  //> "Incredibles 2"
  */
-function getBiggestBoxOfficeMovie() {}
+function getBiggestBoxOfficeMovie(movies) {
+  // set your inputs and ouputs
+  let largestBox = 0
+  let movieTitle = null
+
+  // loop through movies 
+  for(let movie of movies) {
+    // change box office into strict num for comparison
+    let modified = +movie.boxOffice.slice(1).split(",").join("")
+    // ask your conditional
+    if(modified > largestBox) {
+      // reassign and accum
+      largestBox = modified
+      movieTitle = movie.title
+    }
+  } 
+  // return movie title
+  return movieTitle
+}
+
+console.log(getBiggestBoxOfficeMovie(movies))
 
 // Do not change anything below this line.
 module.exports = {
